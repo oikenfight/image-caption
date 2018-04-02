@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  workspace:
+    image: chainer_workspace
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "5000:5000"
+      - "8080:8080"
+      - "8888:8888"
+    volumes:
+      - ./:/home/work
+    working_dir: "/home/work"
+    tty: true

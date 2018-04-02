@@ -1,0 +1,5 @@
+.DS_Store
+/.idea
+/dataset/dataset.json
+dataset.pkl
+vgg_feats.mat
