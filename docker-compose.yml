@@ -2,15 +2,33 @@ version: '3'
 
 services:
   workspace:
-    image: chainer_workspace
+    image: workspace
     build:
       context: ./
-      dockerfile: ./Dockerfile
+      dockerfile: docker/workspace/Dockerfile
     ports:
       - "5000:5000"
       - "8080:8080"
       - "8888:8888"
     volumes:
-      - ./:/home/work
-    working_dir: "/home/work"
+      - ./:/workspace
+    working_dir: "/workspace"
     tty: true
+  python:
+    depends_on:
+      - workspace
+    build:
+      context: ./
+      dockerfile: ./docker/
+    volumes:
+      - ./:/workspace
+    working_dir: "/workspace"
+  pip:
+    depends_on:
+      - workspace
+    build:
+      context: ./
+      dockerfile: ./docker/
+    volumes:
+      - ./:/workspace
+    working_dir: "/workspace"
