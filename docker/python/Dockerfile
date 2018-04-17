@@ -1,5 +1,7 @@
-FROM workspace
+FROM workspace_oikawa
 
-ENTRYPOINT ["python"]
+MAINTAINER Yuta Oikawa
+
+ENTRYPOINT ["python3"]
 
 CMD ["--version"]

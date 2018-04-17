@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  workspace:
-    image: workspace
+  workspace_oikawa:
+    image: workspace_oikawa
     build:
       context: ./
       dockerfile: docker/workspace/Dockerfile
@@ -16,16 +16,7 @@ services:
     tty: true
   python:
     depends_on:
-      - workspace
-    build:
-      context: ./
-      dockerfile: ./docker/
-    volumes:
-      - ./:/workspace
-    working_dir: "/workspace"
-  pip:
-    depends_on:
-      - workspace
+      - workspace_oikawa
     build:
       context: ./
       dockerfile: ./docker/
