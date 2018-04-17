@@ -10,6 +10,12 @@ RUN apt-get install -y \
     zsh \
     vim \
     tree \
+    gcc \
+    openssl \
+    zlib1g-dev \
+    libssl-dev \
+    libbz2-dev \
+    libreadline-dev \
     language-pack-ja-base \
     language-pack-ja \
     ibus-mozc \
