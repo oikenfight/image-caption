@@ -13,6 +13,10 @@ services:
     volumes:
       - nvidia_driver_375.66:/usr/local/nvidia:ro
       - ./:/workspace
+    devices:
+      - /dev/nvidiactl
+      - /dev/nvidia-uvm
+      - /dev/nvidia0
     working_dir: "/workspace"
     tty: true
   python:
@@ -24,6 +28,10 @@ services:
     volumes:
       - nvidia_driver_375.66:/usr/local/nvidia:ro
       - ./:/workspace
+    devices:
+      - /dev/nvidiactl
+      - /dev/nvidia-uvm
+      - /dev/nvidia0
     working_dir: "/workspace"
 volumes:
   nvidia_driver_375.66:
