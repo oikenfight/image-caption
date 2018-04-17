@@ -1,5 +1,7 @@
 FROM nvidia/cuda:8.0-devel
 
+MAINTAINER Yuta Oikawa
+
 RUN apt-get upgrade -y && apt-get update -y
 RUN apt-get install -y \
     wget \
@@ -7,24 +9,32 @@ RUN apt-get install -y \
     git \
     zsh \
     vim \
-    python3-dev \
-    python3-pip \
+    tree \
     language-pack-ja-base \
     language-pack-ja \
-    ibus-mozc
+    ibus-mozc \
+    build-essential \
+    python3-dev \
+    python3-pip
 
 RUN update-locale LANG=ja_JP.UTF-8 LANGUAGE=ja_JP:ja
 ENV LANG ja_JP.UTF-8
 ENV LC_ALL ja_JP.UTF-8
 ENV LC_CTYPE ja_JP.UTF-8
 
+# デフォルトだと /usr/local/cuda にパスが設定されているようなので、明示的に/usr/local/cuda-8.0 にパスを通す必要があるそう
+ENV CUDA_PATH=/usr/local/cuda-8.0
+ENV PATH=/usr/local/cuda-8.0/bin:$PATH
+ENV LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH
+
+# cupy は cuda のバージョンに合ったものを明示的に指定しないと認識出来ないため、cupy-cuda80 と指定してインストール
 RUN pip3 install --upgrade pip
-RUN pip3 install
+RUN pip3 install \
     setuptools \
-    cupy \
+    cupy-cuda80 \
     chainer \
     --no-cache-dir
 
-RUN python3 -c "import chainer; print(chainer.cuda.available)"
+RUN mkdir workspace
 
-CMD ["/bin/zsh"]
+CMD ["/bin/bash"]
