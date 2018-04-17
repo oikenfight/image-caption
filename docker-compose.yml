@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  workspace_oikawa:
-    image: workspace_oikawa
+  image_caption_workspace_oikawa:
+    image: image_caption_workspace_oikawa
     build:
       context: ./
       dockerfile: docker/workspace/Dockerfile
@@ -20,7 +20,7 @@ services:
       - workspace_oikawa
     build:
       context: ./
-      dockerfile: ./docker/
+      dockerfile: ./docker/python/Dockerfile
     volumes:
       - nvidia_driver_375.66:/usr/local/nbidia:ro
       - ./:/workspace
