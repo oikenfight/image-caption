@@ -36,5 +36,11 @@ RUN pip3 install \
     --no-cache-dir
 
 RUN mkdir workspace
+<<<<<<< HEAD
 
 CMD ["/bin/bash"]
+
+=======
+
+CMD ["/bin/bash"]
+>>>>>>> origin/develop
