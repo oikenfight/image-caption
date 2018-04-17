@@ -11,6 +11,7 @@ services:
       - "8080:8080"
       - "8888:8888"
     volumes:
+      - nvidia_driver_375.66:/usr/local/nbidia:ro
       - ./:/workspace
     working_dir: "/workspace"
     tty: true
@@ -21,5 +22,9 @@ services:
       context: ./
       dockerfile: ./docker/
     volumes:
+      - nvidia_driver_375.66:/usr/local/nbidia:ro
       - ./:/workspace
     working_dir: "/workspace"
+volumes:
+  nvidia_driver_375.66:
+      external: true
