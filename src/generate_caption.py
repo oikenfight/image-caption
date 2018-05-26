@@ -1,6 +1,6 @@
 import argparse
 import numpy as np
-import _pickle as pickle
+import pickle as pickle
 from image_model import VGG19
 from net import ImageCaption
 
