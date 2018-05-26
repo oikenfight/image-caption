@@ -1,3 +1,4 @@
+# FROM nvidia/cuda:9.2-cudnn7-runtime
 FROM nvidia/cuda:8.0-devel
 
 MAINTAINER Yuta Oikawa
@@ -39,6 +40,9 @@ RUN pip3 install \
     setuptools \
     cupy-cuda80 \
     chainer \
+    scipy \
+    pillow \
+    h5py \
     --no-cache-dir
 
 RUN mkdir workspace
