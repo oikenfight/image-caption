@@ -7,3 +7,4 @@ VGG_ILSVRC_19_layers.caffemodel
 __memo.md
 output_*
 vgg19.pkl
+src/__pycache__/
