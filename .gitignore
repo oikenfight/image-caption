@@ -11,3 +11,4 @@ VGG_ILSVRC_19_layers.caffemodel
 __memo.md
 output_*
 src/__pycache__/
+my_src/__pycache__/
