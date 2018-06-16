@@ -3,7 +3,6 @@ import numpy as np
 import pickle as pickle
 from image_model import VGG19
 from net import ImageCaption
-
 import chainer
 from chainer import Variable, serializers, cuda, functions as F
 
@@ -90,3 +89,24 @@ with chainer.using_config('train', False):
             for token_ids in sentences[:5]:
                 tokens = [id_to_word[token_id] for token_id in token_ids[1:-1]]
                 print(' '.join(tokens))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='extract image features')
+    parser.add_argument('--image', '-i', required=True, type=str, help='input image file path')
+    parser.add_argument('--model', '-m', required=True, type=str, help='input images model file path (*.caffemodel or *.pkl)')
+
+    args = parser.parse_args()
+
+    image_model = VGG19()
+    image_model.load(args.image_model)
+
+    caption_net = ImageCaption(len(word_ids), feature_num, hidden_num)
+    serializers.load_hdf5(args.model, caption_net)
+
+    print()
+    print(caption_net)
+    print()
+
+
+

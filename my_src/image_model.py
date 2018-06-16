@@ -6,6 +6,7 @@ import chainer
 from chainer import cuda, functions as F
 from chainer.links import caffe
 
+
 class ImageModel(object):
     def __init__(self):
         self.image_shape = self._image_shape()
@@ -39,7 +40,7 @@ class ImageModel(object):
         x = (shape[0] - image_w) / 2
         y = (shape[1] - image_h) / 2
         pixels = np.asarray(image.resize(shape).crop((x, y, x + image_w, y + image_h))).astype(np.float32)
-        pixels = pixels[:,:,::-1].transpose(2,0,1)
+        pixels = pixels[:, :, ::-1].transpose(2, 0, 1)
         pixels -= self.mean_image
         print("=============================")
         print(pixels.reshape((1,) + pixels.shape))

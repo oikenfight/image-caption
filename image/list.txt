@@ -1,2 +1,6 @@
 image/asakusa.jpg
 image/tree.jpg
+image/dog.jpg
+image/bard.jpg
+image/pc.jpg
+
