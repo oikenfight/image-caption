@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import argparse
 import numpy as np
 import pickle as pickle
 from image_model import VGG19
 from net import ImageCaption
+
 import chainer
 from chainer import Variable, serializers, cuda, functions as F
 
@@ -13,10 +16,10 @@ parser.add_argument('--image_model', '-i', required=True, type=str,
                     help='input images model file path (*.caffemodel or *.pkl)')
 parser.add_argument('--model', '-m', required=True, type=str,
                     help='input model file path')
-parser.add_argument('--sentence', '-s', required=True, type=str,
+parser.add_argument('--dataset', '-d', required=True, type=str,
                     help='sentence dataset file path')
-parser.add_argument('--list', '-l', required=True, type=str,
-                    help='image file list file path')
+parser.add_argument('--path', '-p', required=True, type=str,
+                     help='path of input image file')
 args = parser.parse_args()
 
 feature_num = 4096
@@ -24,7 +27,7 @@ hidden_num = 512
 beam_width = 20
 max_length = 60
 
-with open(args.sentence, 'rb') as f:
+with open(args.dataset, 'rb') as f:
     sentence_dataset = pickle.load(f)
 word_ids = sentence_dataset['word_ids']
 id_to_word = {}
@@ -36,10 +39,6 @@ image_model.load(args.image_model)
 
 caption_net = ImageCaption(len(word_ids), feature_num, hidden_num)
 serializers.load_hdf5(args.model, caption_net)
-
-print()
-print(caption_net)
-print()
 
 xp = np
 if args.gpu >= 0:
@@ -53,9 +52,6 @@ if args.gpu >= 0:
 
 bos = word_ids['<S>']
 eos = word_ids['</S>']
-
-with open(args.list) as f:
-    paths = filter(bool, f.read().split('\n'))
 
 
 def generate(net, image_model, image_path):
@@ -83,30 +79,10 @@ def generate(net, image_model, image_path):
 
 with chainer.using_config('train', False):
     with chainer.using_config('enable_backprop', False):
-        for path in paths:
-            sentences = generate(caption_net, image_model, path)
-            print('# ', path)
-            for token_ids in sentences[:5]:
-                tokens = [id_to_word[token_id] for token_id in token_ids[1:-1]]
-                print(' '.join(tokens))
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='extract image features')
-    parser.add_argument('--image', '-i', required=True, type=str, help='input image file path')
-    parser.add_argument('--model', '-m', required=True, type=str, help='input images model file path (*.caffemodel or *.pkl)')
-
-    args = parser.parse_args()
-
-    image_model = VGG19()
-    image_model.load(args.image_model)
-
-    caption_net = ImageCaption(len(word_ids), feature_num, hidden_num)
-    serializers.load_hdf5(args.model, caption_net)
-
-    print()
-    print(caption_net)
-    print()
-
-
-
+        #
+        # for path in paths:
+        sentences = generate(caption_net, image_model, args.path)
+        print('# ', args.path)
+        for token_ids in sentences[:5]:
+            tokens = [id_to_word[token_id] for token_id in token_ids[1:-1]]
+            print(' '.join(tokens))
