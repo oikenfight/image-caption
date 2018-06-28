@@ -9,6 +9,9 @@ stair_caption_dataset.pkl
 vgg_feats.mat
 VGG_ILSVRC_19_layers.caffemodel
 __memo.md
+*.pkl
+image_feature.pkl
+stair_caption_image_feature.pkl
 output_*
 src/__pycache__/
 my_src/__pycache__/
