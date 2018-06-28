@@ -2,14 +2,31 @@ import argparse
 import numpy as np
 import pickle as pickle
 from image_model import VGG19
-from net import ImageCaption
 import chainer
 from chainer import Variable, serializers, cuda, functions as F
 
-feature_num = 4096
-hidden_num = 512
-beam_width = 20
-max_length = 60
+
+class ImageFeature:
+    feature_num = 4096
+    hidden_num = 512
+    beam_width = 20
+    max_length = 60
+    image_model = VGG19()
+
+    def load_model(self, model_path: str):
+        """
+        :param str model_path: this is model path
+        :return:
+        """
+        self.image_model.load(model_path)
+        return
+
+    def features(self, image_path: str) -> list:
+        """
+        :param str image_path: this is image path
+        :return list features:
+        """
+        return self.image_model.feature(image_path)
 
 
 if __name__ == '__main__':
@@ -20,22 +37,10 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    image_model = VGG19()
-    image_model.load(args.model)
+    image_feature = ImageFeature()
 
-    cuda.check_cuda_available()
-
-    xp = np
-    if args.gpu >= 0:
-        print('using gpu')
-        cuda.check_cuda_available()
-        gpu_device = args.gpu
-        cuda.get_device(gpu_device).use()
-        xp = cuda.cupy
-        image_model.to_gpu(gpu_device)
-        caption_net.to_gpu(gpu_device)
-
-    feature = image_model.feature(args.image)
+    image_feature.load_model(args.model)
+    feature = image_feature.features(args.image)
 
     print(feature)
     print(feature.shape)

@@ -42,9 +42,6 @@ class ImageModel(object):
         pixels = np.asarray(image.resize(shape).crop((x, y, x + image_w, y + image_h))).astype(np.float32)
         pixels = pixels[:, :, ::-1].transpose(2, 0, 1)
         pixels -= self.mean_image
-        print("=============================")
-        print(pixels.reshape((1,) + pixels.shape))
- 
         return pixels.reshape((1,) + pixels.shape)
 
     def to_gpu(self, device=None):
