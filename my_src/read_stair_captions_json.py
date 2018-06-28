@@ -24,6 +24,7 @@ with open(args.json_file_path, 'r') as json_file:
     for data in read_data:
         print(data)
 
+    print()
     print('~~~~~~~~~ images ~~~~~~~~~~~~~~~~~~~~~~~~~~')
     images = read_data['images']
     for i in range(args.read_num):
@@ -31,6 +32,7 @@ with open(args.json_file_path, 'r') as json_file:
         print(images[i])
         print()
 
+    print()
     print('~~~~~~~~~ annotations ~~~~~~~~~~~~~~~~~~~~~~~~~~')
     annotations = read_data['annotations']
     for i in range(args.read_num):
@@ -42,7 +44,8 @@ with open(args.json_file_path, 'r') as json_file:
         if annotation['image_id'] == 179765:
             print(annotation)
 
+    print()
     print('~~~~~~~~~ match images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     for image in images:
-        if image['id'] == 203312:
+        if image['id'] == 18801:
             print(image)

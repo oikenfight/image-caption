@@ -21,6 +21,7 @@ with open(args.json_file_path, 'r') as json_file:
     for data in dataset:
         print(data)
 
+    print('image len and type')
     print(len(dataset['images']))
     print(type(dataset['images']))
     # print(dataset['images'])
@@ -35,21 +36,8 @@ with open(args.json_file_path, 'r') as json_file:
         cnt += 1
 
     # cnt = 0
-    # for data in dataset['annotations']:
-    #     print(data)
-    #     print()
-    #     if cnt == args.read_num:
-    #         break
-    #     cnt += 1
-
-    cnt = 0
     print('+++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    for data in dataset['annotations']:
-        if cnt == args.read_num:
-            break
-        cnt += 1
-        print(data)
-        if data['image_id'] == 203312:
-            for sentence in data['sentences']:
-                print(sentence['raw'])
+    for data in dataset['images']:
+        if data['imgid'] == 0:
+            print(data)
 
