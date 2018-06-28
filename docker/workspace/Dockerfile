@@ -22,7 +22,9 @@ RUN apt-get install -y \
     ibus-mozc \
     build-essential \
     python3-dev \
-    python3-pip
+    python3-pip \
+    zip \
+    unzip
 
 RUN update-locale LANG=ja_JP.UTF-8 LANGUAGE=ja_JP:ja
 ENV LANG ja_JP.UTF-8
